@@ -7,9 +7,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <style type="text/css">
-            body {
-                background-color: #484d6d;
-            }
+            
         </style>
     </head>
     
@@ -40,22 +38,38 @@
             <option value="locrian">Locrian (VII)</option>
         </select>
 
+        <input id="bpmSlider" type="range" value="120" min="60" max="220" step="10" onchange="updateBpm();"/>
+
+        <span id="bpmLabel">120 bpm</span>
+
+        <select id="noteValues">
+            <option value="0.25">Semicroma 1/16</option>
+            <option value="0.5">Croma 1/8</option>
+            <option value="1" selected="selected">Semiminima 1/4</option>
+            <option value="2">Minima 2/4</option>
+            <option value="4">Semibreve 4/4</option>
+        </select>
+
+        <select id="oscillatorType">
+            <option value="sine">Sine</option>
+            <option value="triangle">Triangle</option>
+            <option value="square">Square</option>
+            <option value="sawtooth">Sawtooth</option>
+        </select>
+
         <button type="button" onclick="playScale();return false;">Play!</button>
 
         <script type="text/javascript">
 
-            context = new AudioContext;
+            try {
+                context = new (AudioContext || webkitAudioContext);
+            }
+            catch(e) {
+                alert('No web audio oscillator support in this browser');
+            }
 
             // Note frequencies - starting from C3
             noteFrequencies = [131, 139, 147, 156, 165, 175, 185, 196, 208, 220, 233, 247, 262, 277, 294, 311, 330, 349, 370, 392, 415, 440, 466, 494]; 
-            // Note values
-            noteValues = {
-                'Semicroma 1/16': 0.25,
-                'Croma 1/8': 0.5,
-                'Semiminima 1/4': 1,
-                'Minima 2/4': 2,
-                'Semibreve 4/4': 4
-            };
             // Scale steps  - 1: S, 2: T
             scales = {
                 'ionian': [2,2,1,2,2,2,1],
@@ -74,14 +88,16 @@
 
                 var oscillator,
                     t = context.currentTime,
-                    bpm = 120,
-                    noteValue = 1,
+                    bpm = parseInt(document.getElementById("bpmSlider").value),
+                    noteValue = parseFloat(document.getElementById("noteValues").value),
                     noteLength = 1/(bpm/60) * noteValue,
                     index = parseInt(document.getElementById("tonality").value),
-                    scale = [0].concat(scales[document.getElementById("scale").value]);
+                    scale = [0].concat(scales[document.getElementById("scale").value]),
+                    oscillatorType = document.getElementById("oscillatorType").value;
 
                 for (var i = 0; i < scale.length; i++) {
                     oscillator = context.createOscillator(); 
+                    oscillator.type = oscillatorType;
                     index += scale[i];
                     oscillator.frequency.value = noteFrequencies[index];
                     oscillator.start(t);
@@ -89,6 +105,12 @@
                     oscillator.stop(t);
                     oscillator.connect(context.destination);
                 }
+            }
+
+            function updateBpm() {
+                var label = document.getElementById("bpmLabel");
+                var slider = document.getElementById("bpmSlider");
+                label.innerHTML = slider.value + " bpm";
             }
 
         </script>
