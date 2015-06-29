@@ -57,6 +57,11 @@
             <option value="sawtooth">Sawtooth</option>
         </select>
 
+        <label>
+            <input id="repeatDescending" type="checkbox" checked />
+            Descending
+        </label>
+
         <button type="button" onclick="playScale();return false;">Play!</button>
 
         <script type="text/javascript">
@@ -93,7 +98,14 @@
                     noteLength = 1/(bpm/60) * noteValue,
                     index = parseInt(document.getElementById("tonality").value),
                     scale = [0].concat(scales[document.getElementById("scale").value]),
-                    oscillatorType = document.getElementById("oscillatorType").value;
+                    oscillatorType = document.getElementById("oscillatorType").value,
+                    repeatDescending = document.getElementById("repeatDescending").checked;
+
+                if (repeatDescending) {
+                    for(var i=scale.length-1; i>0; i--) {
+                        scale.push(-scale[i]);
+                    }
+                }
 
                 for (var i = 0; i < scale.length; i++) {
                     oscillator = context.createOscillator(); 
