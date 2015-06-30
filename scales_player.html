@@ -6,63 +6,76 @@
         <title>JS Scales Player</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style type="text/css">
-            
-        </style>
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     
     <body>
 
-        <select id="tonality">
-            <option value="0">DO / C</option>
-            <option value="1">DO# / C#</option>
-            <option value="2">RE / D</option>
-            <option value="3">RE / D</option>
-            <option value="4">MI / E</option>
-            <option value="5">FA / F</option>
-            <option value="6">FA# / F#</option>
-            <option value="7">SOL / G</option>
-            <option value="8">SOL# / G#</option>
-            <option value="9">LA / A</option>
-            <option value="10">LA# / A</option>
-            <option value="11">SI / B</option>
-        </select>
+        <div id="background">
 
-        <select id="scale">
-            <option value="ionian">Ionian (I)</option>
-            <option value="dorian">Dorian (II)</option>
-            <option value="phrygian">Phrygian (III)</option>
-            <option value="lydian">Lydian (IV)</option>
-            <option value="mixolydian">Mixolydian (V)</option>
-            <option value="aeolian">Aeolian (VI)</option>
-            <option value="locrian">Locrian (VII)</option>
-        </select>
+            <canvas id="gradient"></canvas>
 
-        <input id="bpmSlider" type="range" value="120" min="60" max="220" step="10" onchange="updateBpm();"/>
+            <div id="panel">
+                <div class="control">
+                    <select id="tonality">
+                        <option value="0">DO / C</option>
+                        <option value="1">DO# / C#</option>
+                        <option value="2">RE / D</option>
+                        <option value="3">RE / D</option>
+                        <option value="4">MI / E</option>
+                        <option value="5">FA / F</option>
+                        <option value="6">FA# / F#</option>
+                        <option value="7">SOL / G</option>
+                        <option value="8">SOL# / G#</option>
+                        <option value="9">LA / A</option>
+                        <option value="10">LA# / A</option>
+                        <option value="11">SI / B</option>
+                    </select>
+                </div>
+                <div class="control">
+                    <select id="scale">
+                        <option value="ionian">Ionian (I)</option>
+                        <option value="dorian">Dorian (II)</option>
+                        <option value="phrygian">Phrygian (III)</option>
+                        <option value="lydian">Lydian (IV)</option>
+                        <option value="mixolydian">Mixolydian (V)</option>
+                        <option value="aeolian">Aeolian (VI)</option>
+                        <option value="locrian">Locrian (VII)</option>
+                    </select>
+                </div>
+                <div class="control">
+                    <input id="bpmSlider" type="range" value="120" min="60" max="220" step="10" onchange="updateBpm();"/>
+                    <br/><span id="bpmLabel">120 bpm</span>
+                </div>
+                <div class="control">
+                    <select id="noteValues">
+                        <option value="0.25">Semicroma 1/16</option>
+                        <option value="0.5">Croma 1/8</option>
+                        <option value="1" selected="selected">Semiminima 1/4</option>
+                        <option value="2">Minima 2/4</option>
+                        <option value="4">Semibreve 4/4</option>
+                    </select>
+                </div>
+                <div class="control">
+                    <select id="oscillatorType">
+                        <option value="sine">Sine</option>
+                        <option value="triangle">Triangle</option>
+                        <option value="square">Square</option>
+                        <option value="sawtooth">Sawtooth</option>
+                    </select>
+                </div>
+                <div class="control">
+                    <label>
+                        <input id="repeatDescending" type="checkbox" checked />
+                        Descending
+                    </label>
+                </div>
+                <div class="control">
+                    <button type="button" onclick="playScale();return false;">Play!</button>
+                </div>
+            </div>
 
-        <span id="bpmLabel">120 bpm</span>
-
-        <select id="noteValues">
-            <option value="0.25">Semicroma 1/16</option>
-            <option value="0.5">Croma 1/8</option>
-            <option value="1" selected="selected">Semiminima 1/4</option>
-            <option value="2">Minima 2/4</option>
-            <option value="4">Semibreve 4/4</option>
-        </select>
-
-        <select id="oscillatorType">
-            <option value="sine">Sine</option>
-            <option value="triangle">Triangle</option>
-            <option value="square">Square</option>
-            <option value="sawtooth">Sawtooth</option>
-        </select>
-
-        <label>
-            <input id="repeatDescending" type="checkbox" checked />
-            Descending
-        </label>
-
-        <button type="button" onclick="playScale();return false;">Play!</button>
+        </div>
 
         <script type="text/javascript">
 

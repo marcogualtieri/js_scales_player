@@ -1,0 +1,34 @@
+div#background {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: #eee;
+}
+
+canvas#gradient {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    background-color: rgb(120, 162, 160);
+    background-image: -webkit-gradient(linear, 0% 100%, 100% 0%, from(rgb(120, 162, 160)), to(rgb(28, 39, 56)));
+}
+
+div#panel {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 20px 0;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+div.control {
+    margin-bottom: 10px;
+}
