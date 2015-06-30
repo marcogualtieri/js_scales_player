@@ -4,7 +4,6 @@ div#background {
     right: 0;
     bottom: 0;
     left: 0;
-    background-color: #eee;
 }
 
 canvas#gradient {
@@ -30,5 +29,36 @@ div#panel {
 }
 
 div.control {
-    margin-bottom: 10px;
+    margin-bottom: 14px;
+}
+
+div#panel,
+div#panel select,
+div#panel button {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    color: white;
+    opacity: 0.8;
+}
+
+div#panel select,
+div#panel button {
+    opacity: 1.0;
+    width: 200px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 6px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+
+div#panel select * {
+    background-color: rgb(101, 136, 138);
+}
+
+div#panel button {
+    cursor: pointer;
+}
+div#panel button:hover {
+    background: rgba(255, 255, 255, 0.2);
 }
