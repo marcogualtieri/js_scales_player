@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>JS Scales Player</title>
+        <title>Scales Player</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="style.css">
@@ -44,7 +44,7 @@
                     </select>
                 </div>
                 <div class="control">
-                    <input id="bpmSlider" type="range" value="120" min="60" max="220" step="10" onchange="updateBpm();"/>
+                    <input id="bpmSlider" type="range" value="120" min="60" max="220" step="10" />
                     <br/><span id="bpmLabel">120 bpm</span>
                 </div>
                 <div class="control">
@@ -71,72 +71,33 @@
                     </label>
                 </div>
                 <div class="control">
-                    <button type="button" onclick="playScale();return false;">Play!</button>
+                    <button type="button" id="playButton">Play!</button>
                 </div>
             </div>
 
         </div>
 
+        <script src="animated_background.js"></script>
+
+        <script src="scales_player.js"></script>
+
         <script type="text/javascript">
 
-            try {
-                context = new (AudioContext || webkitAudioContext);
-            }
-            catch(e) {
-                alert('No web audio oscillator support in this browser');
-            }
+            var background = new BackgroundParticles.init(document.getElementById("gradient"));
 
-            // Note frequencies - starting from C3
-            noteFrequencies = [131, 139, 147, 156, 165, 175, 185, 196, 208, 220, 233, 247, 262, 277, 294, 311, 330, 349, 370, 392, 415, 440, 466, 494]; 
-            // Scale steps  - 1: S, 2: T
-            scales = {
-                'ionian': [2,2,1,2,2,2,1],
-                'dorian': [2,1,2,2,2,1,2],
-                'phrygian': [1,2,2,2,1,2,2],
-                'lydian': [2,2,2,1,2,2,1],
-                'mixolydian': [2,2,1,2,2,1,2],  
-                'aeolian': [2,1,2,2,1,2,2],  
-                'locrian': [1,2,2,1,2,2,2]
+            document.getElementById("bpmSlider").onchange = function() {
+                document.getElementById("bpmLabel").innerHTML = this.value + " bpm";
             };
 
-            function playScale() {
-                // close current context (if any) and open a new one
-                context.close();
-                context = new AudioContext;
-
-                var oscillator,
-                    t = context.currentTime,
-                    bpm = parseInt(document.getElementById("bpmSlider").value),
+            document.getElementById("playButton").onclick = function() {
+                var bpm = parseInt(document.getElementById("bpmSlider").value),
                     noteValue = parseFloat(document.getElementById("noteValues").value),
-                    noteLength = 1/(bpm/60) * noteValue,
-                    index = parseInt(document.getElementById("tonality").value),
-                    scale = [0].concat(scales[document.getElementById("scale").value]),
+                    noteIndex = parseInt(document.getElementById("tonality").value),
+                    scaleIndex = document.getElementById("scale").value,
                     oscillatorType = document.getElementById("oscillatorType").value,
                     repeatDescending = document.getElementById("repeatDescending").checked;
-
-                if (repeatDescending) {
-                    for(var i=scale.length-1; i>0; i--) {
-                        scale.push(-scale[i]);
-                    }
-                }
-
-                for (var i = 0; i < scale.length; i++) {
-                    oscillator = context.createOscillator(); 
-                    oscillator.type = oscillatorType;
-                    index += scale[i];
-                    oscillator.frequency.value = noteFrequencies[index];
-                    oscillator.start(t);
-                    t += noteLength;
-                    oscillator.stop(t);
-                    oscillator.connect(context.destination);
-                }
-            }
-
-            function updateBpm() {
-                var label = document.getElementById("bpmLabel");
-                var slider = document.getElementById("bpmSlider");
-                label.innerHTML = slider.value + " bpm";
-            }
+                new ScalesPlayer.Player(bpm, noteValue, noteIndex, scaleIndex, oscillatorType, repeatDescending);
+            };
 
         </script>
 

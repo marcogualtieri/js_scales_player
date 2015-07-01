@@ -34,7 +34,7 @@ div.control {
 
 div#panel,
 div#panel select,
-div#panel button {
+div#panel button#playButton {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 20px;
     color: white;
@@ -42,7 +42,7 @@ div#panel button {
 }
 
 div#panel select,
-div#panel button {
+div#panel button#playButton {
     opacity: 1.0;
     width: 200px;
     background: rgba(0, 0, 0, 0.2);
@@ -56,9 +56,9 @@ div#panel select * {
     background-color: rgb(101, 136, 138);
 }
 
-div#panel button {
+div#panel button#playButton {
     cursor: pointer;
 }
-div#panel button:hover {
+div#panel button#playButton:hover {
     background: rgba(255, 255, 255, 0.2);
 }
