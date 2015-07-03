@@ -1,9 +1,9 @@
 var BackgroundParticles = BackgroundParticles || {};
 
-(function (out) {
+(function(out) {
 
 	function getParticleColor() {
-		var colors = ['rgba(50,60,70,0.15)', 'rgba(255,255,255,0.2)']; // black and white
+		var colors = ['rgba(0,0,0,0.15)', 'rgba(255,255,255,0.2)']; // black and white
 		return colors[Math.floor(Math.random() * colors.length)];
 	}
 
@@ -12,10 +12,10 @@ var BackgroundParticles = BackgroundParticles || {};
 		this.x = Math.random() * window.innerWidth;
 		this.y = Math.random() * window.innerHeight;
 		// random velocity
-		this.vx = -1 + 1 * Math.random();
-		this.vy = -1 + 1 * Math.random();
+		this.vx = Math.random() * 1 - 1;
+		this.vy = Math.random() * 1 - 1;
 		// shape
-		this.radius = 4;
+		this.radius = 5;
 		this.color = getParticleColor();
 		this.blur = Math.floor(-7 * Math.random() + 9) / 10;
 
