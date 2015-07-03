@@ -1,4 +1,4 @@
 # js_scales_player
 Play scales using the Web Audio API.
 
-[http://marcogualtieri.altervista.org/scales_player/](Live Demo) here (tested just on Chrome v43).
+[Live Demo](http://marcogualtieri.altervista.org/scales_player/) here (tested just on Chrome v43).
